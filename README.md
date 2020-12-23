@@ -66,6 +66,18 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/copy-paste.png)
 
+4. Click on **IMPORT**. 
+
+### Import second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. [NOT READY]
+
+1. Browse to the **Workflows** section in the left pane menu.
+
+2. Click on **IMPORT** to import the workflow:
+
+3. Click on **Browse** and copy paste the content of the [ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/UPDATE-THIS-LINK.json) file inside of the text window. 
+
+![](screenshots/copy-paste.png)
+
 4. Click on **IMPORT**. You will now receive an error that information is missing: 
 
 ![](screenshots/missing-info.png)
