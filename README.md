@@ -66,7 +66,17 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/copy-paste.png)
 
-4. Click on **IMPORT**. 
+4. Click on **IMPORT**. You can now select the workflow and inspect it. Click **RUN** in the rop right corner: 
+
+![](screenshots/mssp-amp-run-add.png)
+
+5. You will now be prompted to enter the `CUSTOMER NAME`, `AMP API CLIENT ID` and `AMP API CLIENT SECRET`. Run this workflow as many times as needed (as many times as you have customers).
+
+![](screenshots/mssp-amp-user-prompt.png)
+
+
+** NEW CONTENT NEEDED BELOW (DO NOT USE)
+
 
 ### Import second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. [NOT READY]
 
@@ -81,9 +91,6 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 4. Click on **IMPORT**. You will now receive an error that information is missing: 
 
 ![](screenshots/missing-info.png)
-
-** NEW CONTENT NEEDED BELOW (DO NOT USE)
-
 
 5. Click on **UPDATE** and fill in the CTR (SecureX threat response), Meraki and Webex API key. These are not stored as plain text, as they are stored as "secure strings" in SecureX.
 
