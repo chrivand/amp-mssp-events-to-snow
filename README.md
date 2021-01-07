@@ -2,7 +2,7 @@
 ![License: CISCO](https://img.shields.io/badge/License-CISCO-blue.svg)
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/)
 
-# SexureX orchestration workflow: AMP MSSP customer events to SecureX incident and SNOW incident [DRAFT, NOT FINISHED]
+# SecureX orchestration workflow: AMP MSSP customer events to SecureX incident and SNOW incident [DRAFT, NOT FINISHED]
 
 This is a set of sample workflows to work with the MSSP environment of Cisco Secure Endpoint (formerly known as Advanced Malware Protection for Endpoints (AMP4E)). It can obtain events from the various customers and create Securex and ServiceNow incidents based on these security events.
 
