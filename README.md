@@ -8,8 +8,16 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 ## Index
 
-1. [Features](#features)
-2. 
+1. [Features and flow](##features-and-flow)
+2. [Installation](#installation)
+    1. [Create table to store encoded MSSP API keys](#create-table-to-store-encoded-mssp-api-keys)
+    2. [Import the first workflow to add encoded AMP API keys to table](#import-the-first-workflow-to-add-encoded-amp-api-keys-to-table)
+    3. [Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents](#import-the-second-workflow-to-retrieve-amp-events-and-create-securex-and-servicenow-incidents)
+    4. [Import the third workflow that sets a global variable containing the ID of the second workflow](#import-the-third-workflow-that-sets-a-global-variable-containing-the-id-of-the-second-workflow)
+    5. [Import the fourth workflow that is triggered when ServiceNow incident is closed](#import-the-fourth-workflow-that-is-triggered-when-servicenow-incident-is-closed)
+    6. [Testing and running the solution](#testing-and-running-the-solution)
+3. [Notes](#notes)
+4. [Author(s)](#authors)
 
 ## Features and flow
 1. The **first** workflow ([ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json)) will be able to obtain user input to add Cisco Secure Endpoint (formerly known as Advanced Malware Protection for Endpoints (AMP4E)) API Credentials + customer name and store them base 64 encoded in a table. Please note that the credentials are base 64 encoded, however are stored in the global table variable. SecureX is secured with MFA, but this still needs to be taken into consideration. This workflow only needs to be run initially and every time you add a customer to your MSSP portal.
