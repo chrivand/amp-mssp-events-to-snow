@@ -29,6 +29,8 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/mssp-amp-overview-add-new.png)
 
+**MORE SCREENSHOTS**
+
 ## Installation
 
 ### Create table to store encoded MSSP API keys
@@ -126,6 +128,8 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 4. Click on **IMPORT**. You might receive an error that information is missing.
 
 5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
+
+#### **IMPORTANT** this workflow is not working right now. Needs troubleshooting!!!
 
 ### Testing and running the solution
 
