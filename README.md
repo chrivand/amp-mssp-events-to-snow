@@ -12,18 +12,18 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 2. [Installation](#installation)
     1. [Create table to store encoded MSSP API keys](#create-table-to-store-encoded-mssp-api-keys)
     2. [Import the first workflow to add encoded AMP API keys to table](#import-the-first-workflow-to-add-encoded-amp-api-keys-to-table)
-    3. [Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents](#import-the-second-workflow-to-retrieve-amp-events-and-create-securex-and-servicenow-incidents)
-    4. [Import the third workflow that sets a global variable containing the ID of the second workflow](#import-the-third-workflow-that-sets-a-global-variable-containing-the-id-of-the-second-workflow)
-    5. [Import the fourth workflow that is triggered when ServiceNow incident is closed](#import-the-fourth-workflow-that-is-triggered-when-servicenow-incident-is-closed)
+    3. [Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents](#import-the-third-workflow-to-retrieve-amp-events-and-create-securex-and-servicenow-incidents)
+    4. [Import the third workflow that sets a global variable containing the ID of the second workflow](#import-the-fourth-workflow-that-sets-a-global-variable-containing-the-id-of-the-second-workflow)
+    5. [Import the fourth workflow that is triggered when ServiceNow incident is closed](#import-the-fifth-workflow-that-is-triggered-when-servicenow-incident-is-closed)
     6. [Testing and running the solution](#testing-and-running-the-solution)
 3. [Notes](#notes)
 4. [Author(s)](#authors)
 
 ## Features and flow
 1. The **first** workflow ([ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json)) will be able to obtain user input to add Cisco Secure Endpoint (formerly known as Advanced Malware Protection for Endpoints (AMP4E)) API Credentials + customer name and store them base 64 encoded in a table. Please note that the credentials are base 64 encoded, however are stored in the global table variable. SecureX is secured with MFA, but this still needs to be taken into consideration. This workflow only needs to be run initially and every time you add a customer to your MSSP portal.
-2. The **second** workflow (ADD JSON FILE HERE) will loop through these API keys and obtain the AMP events for the past 5 minutes. This workflow can be scheduled to run every 5 minutes (or otherwise). It is also possible to configure which events are deemed as important to retrieve. The suggestion is to retrieve only high priority events, such as events with a `HIGH` or `CRITICAL` severity. This workflow will then create a SecureX incident, as well as a ServiceNow incident. It will make sure the ServiceNow incidents has information to close the loop back to SecureX by closing the incident. Optionally this workflow is able to isolate the AMP host or move it to a Triage group. 
-3. The **third** workflow (ADD JSON FILE HERE) only needs to be run once initially. This workflow sets a global variable containing the ID of the second workflow. This is needed by ServiceNow to run the fourth and final workflow of this solution.
-4. The **fourth** workflow (ADD JSON FILE HERE) will be able to close the SecureX incident when the ServiceNow incident is closed. It will also optionally be able to stop the AMP host isolation and move the host back to its original group. The ServiceNow incident ID will be added to the SecureX incident to fully sync the 2 systems.
+2. The **second** workflow ([AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)) will loop through these API keys and obtain the AMP events for the past 5 minutes. This workflow can be scheduled to run every 5 minutes (or otherwise). It is also possible to configure which events are deemed as important to retrieve. The suggestion is to retrieve only high priority events, such as events with a `HIGH` or `CRITICAL` severity. This workflow will then create a SecureX incident, as well as a ServiceNow incident. It will make sure the ServiceNow incidents has information to close the loop back to SecureX by closing the incident. Optionally this workflow is able to isolate the AMP host or move it to a Triage group. 
+3. The **third** workflow ([SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)) only needs to be run once initially. This workflow sets a global variable containing the ID of the second workflow. This is needed by ServiceNow to run the fourth and final workflow of this solution.
+4. The **fourth** workflow ([SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)) will be able to close the SecureX incident when the ServiceNow incident is closed. It will also optionally be able to stop the AMP host isolation and move the host back to its original group. The ServiceNow incident ID will be added to the SecureX incident to fully sync the 2 systems.
 
 Below you can view the current workflows. Please feel inspired to add to it as you see fit. **Please always test thoroughly before using in production!**
 
@@ -87,52 +87,55 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/mssp-amp-user-prompt.png)
 
-
-** NEW CONTENT NEEDED BELOW (DO NOT USE)
-
-
-### Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. [NOT READY]
+### Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. 
 
 1. Browse to the **Workflows** section in the left pane menu.
 
-2. Click on **IMPORT** to import the workflow:
+2. Click on **IMPORT** to import the workflow.
 
-3. Click on **Browse** and copy paste the content of the [ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/UPDATE-THIS-LINK.json) file inside of the text window. 
+3. Click on **Browse** and copy paste the content of the [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json) file inside of the text window. 
 
-4. Click on **IMPORT**. You will now receive an error that information is missing: 
+4. Click on **IMPORT**. You might receive an error that information is missing.
 
-![](screenshots/missing-info.png)
+5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys. These are not stored as plain text, as they are stored as "secure strings" in SecureX.
 
-5. Click on **UPDATE** and fill in the CTR (SecureX threat response). These are not stored as plain text, as they are stored as "secure strings" in SecureX.
-
-> **Note:** To obtain the threat response API keys, create one here: https://securex.us.security.cisco.com/settings/apiClients. Please change the _.us._ in the url to _.eu._ or _.apjc._ respectively for the European or Asian instances. If you are using the EU or APJC instance, you will also need to change the target of the `CTRGenerateAccessToken` and `CTR Create Incident` activities in the workflow. You do this by clicking on the activity and scrolling to the `target` section. **Make sure to do this for all 4 related CTR targets!** Here is an example:
-
-![](screenshots/edit-target.png)
-
-![](screenshots/update-target.png)
+> **Note:** To obtain the threat response API keys, create one here: https://securex.us.security.cisco.com/settings/apiClients. Please change the _.us._ in the url to _.eu._ or _.apjc._ respectively for the European or Asian instances. If you are using the EU or APJC instance, you will also need to change the target of the `CTRGenerateAccessToken` and `CTR Create Incident` activities in the workflow. You do this by clicking on the activity and scrolling to the `target` section. **Make sure to do this for all 4 related CTR targets!**
 
 ### Import the third workflow that sets a global variable containing the ID of the second workflow
+
 1. Browse to the **Workflows** section in the left pane menu.
 
-2. Click on **IMPORT** to import the workflow:
+2. Click on **IMPORT** to import the workflow.
 
-3. Click on **Browse** and copy paste the content of the [JSON FILE] file inside of the text window. 
+3. Click on **Browse** and copy paste the content of the [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json) file inside of the text window. 
+
+4. Click on **IMPORT**. You might receive an error that information is missing.
+
+5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
+
+6. After importing this workflow, you can open it and then click **RUN** in the top right corner. You will not have to use this workflow again after taking this action.
 
 ### Import the fourth workflow that is triggered when ServiceNow incident is closed
+
 1. Browse to the **Workflows** section in the left pane menu.
 
-2. Click on **IMPORT** to import the workflow:
+2. Click on **IMPORT** to import the workflow.
 
-3. Click on **Browse** and copy paste the content of the [JSON FILE] file inside of the text window. 
+3. Click on **Browse** and copy paste the content of the [SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json) file inside of the text window. 
+
+4. Click on **IMPORT**. You might receive an error that information is missing.
+
+5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
 
 ### Testing and running the solution
-9. Now it is time to test, click on **RUN** in the top right of your window, and eveyrhting shopuld be working now. If not try troubleshooting by click on the activity that is colored red. 
 
-![](screenshots/run.png)
+1. Now it is time to test, click on **RUN** in the top right of your window, and everything shopuld be working now. If not try troubleshooting by click on the activity that is colored red. 
 
-10. As a final step you could choose to enable to scheduled trigger for this workflow. This is recommended, as the workflow only retrieves the security events of the last hour. By scheduling it, the Security analysts will be updated every hour for potential new malicious activity. To enable the trigger, click on the hyperlink below and uncheck the `DISABLE TRIGGER` checkbox. This can be found in the workflow properties in the right menu pane. 
+2. As a final step you could choose to enable to scheduled trigger for the [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json) workflow. This is recommended, as the workflow only retrieves the security events of the last 5 minutes. By scheduling it, the Security analysts will be updated every hour for potential new malicious activity. To enable the trigger, click on the hyperlink below and uncheck the `DISABLE TRIGGER` checkbox. This can be found in the workflow properties in the right menu pane. 
 
-![](screenshots/schedule.png)
+![](screenshots/trigger-5min.png)
+
+![](screenshots/trigger-5min-disabled.png)
 
 > **Note:** make sure not to select an activity when looking for the global workflow properties.
 
