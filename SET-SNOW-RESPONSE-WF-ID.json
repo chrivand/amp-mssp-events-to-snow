@@ -37,7 +37,7 @@
       {
         "schema_id": "datatype.string",
         "properties": {
-          "value": "CHRIVAND-SNOW-TO-AMP",
+          "value": "SNOW-TO-AMP",
           "scope": "local",
           "name": "Action to Find",
           "type": "datatype.string",
