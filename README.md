@@ -31,9 +31,15 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 **MORE SCREENSHOTS**
 
-## Installation
+# Installation
 
-### Create table to store encoded MSSP API keys
+## Create table to store encoded MSSP API keys
+
+### Required workflows, targets and accounts keys
+
+* None
+
+### Installation steps:
 
 1. Browse to your SecureX orchestration instance. This wille be a different URL depending on the region your account is in: 
 
@@ -69,8 +75,14 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/mssp-amp-new-global.png)
 
+## Import the first workflow to add encoded AMP API keys to table
 
-### Import the first workflow to add encoded AMP API keys to table
+### Required workflows, targets and accounts keys
+
+* Main Workflow: [ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json) 
+
+### Installation steps:
+
 1. Browse to the **Workflows** section in the left pane menu.
 
 2. Click on **IMPORT** to import the workflow:
@@ -89,7 +101,16 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/mssp-amp-user-prompt.png)
 
-### Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. 
+## Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. 
+
+### Required workflows, targets and accounts keys
+
+* Atomic Workflow: **Generate Access Token for SecureX**, **Copy-Threat Response - Create Incident**, **AMP - Move Computer to Group**, **AMP - Isolate Host**, **Service Now - Create Incident**, **Service Now - Add Work Note to Incident**
+* Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
+* Target: **Private Intel Base**, **ServiceNow**, **AMP_Target**
+* Account keys: **Private Intel Base**, **ServiceNow**
+
+### Installation steps:
 
 1. Browse to the **Workflows** section in the left pane menu.
 
@@ -103,7 +124,16 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 > **Note:** To obtain the threat response API keys, create one here: https://securex.us.security.cisco.com/settings/apiClients. Please change the _.us._ in the url to _.eu._ or _.apjc._ respectively for the European or Asian instances. If you are using the EU or APJC instance, you will also need to change the target of the `CTRGenerateAccessToken` and `CTR Create Incident` activities in the workflow. You do this by clicking on the activity and scrolling to the `target` section. **Make sure to do this for all 4 related CTR targets!**
 
-### Import the third workflow that sets a global variable containing the ID of the second workflow
+## Import the third workflow that sets a global variable containing the ID of the second workflow
+
+### Required workflows, targets and accounts keys
+
+* Atomic Workflow: **Generate Access Token for SecureX**, **List CTR response actions** 
+* Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
+* Target: **CTR API Target**
+* Account keys: **CTR_Credentials**
+
+### Installation steps:
 
 1. Browse to the **Workflows** section in the left pane menu.
 
@@ -117,7 +147,16 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 6. After importing this workflow, you can open it and then click **RUN** in the top right corner. You will not have to use this workflow again after taking this action.
 
-### Import the fourth workflow that is triggered when ServiceNow incident is closed
+## Import the fourth workflow that is triggered when ServiceNow incident is closed
+
+### Required workflows, targets and accounts keys
+
+* Atomic Workflow: **Generate Access Token for SecureX**, **AMP - Move Computer to Group**
+* Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
+* Target: **CTR API Target**, **AMP_Target**
+* Account keys: **CTR_Credentials**
+
+### Installation steps:
 
 1. Browse to the **Workflows** section in the left pane menu.
 
@@ -131,7 +170,7 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 #### **IMPORTANT** this workflow is not working right now. Needs troubleshooting!!!
 
-### Testing and running the solution
+## Testing and running the solution
 
 1. Now it is time to test, click on **RUN** in the top right of your window, and everything shopuld be working now. If not try troubleshooting by click on the activity that is colored red. 
 
