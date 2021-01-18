@@ -129,7 +129,7 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 ### Required workflows, targets and accounts keys
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **List CTR response actions** 
-* Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
+* Main Workflow: [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)
 * Target: **CTR API Target**
 * Account keys: **CTR_Credentials**
 
@@ -152,7 +152,7 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 ### Required workflows, targets and accounts keys
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **AMP - Move Computer to Group**
-* Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
+* Main Workflow: [SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)
 * Target: **CTR API Target**, **AMP_Target**
 * Account keys: **CTR_Credentials**
 
