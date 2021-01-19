@@ -2,7 +2,7 @@
 ![License: CISCO](https://img.shields.io/badge/License-CISCO-blue.svg)
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/)
 
-# SecureX orchestration workflow: AMP MSSP customer events to SecureX incident and SNOW incident [DRAFT, NOT FINISHED]
+# SecureX orchestration workflow: AMP MSSP customer events to SecureX incident and SNOW incident [DRAFT]
 
 This is a set of sample workflows to work with the MSSP environment of Cisco Secure Endpoint (formerly known as Advanced Malware Protection for Endpoints (AMP4E)). It can obtain events from the various customers and create Securex and ServiceNow incidents based on these security events.
 
@@ -35,7 +35,7 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ## Create table to store encoded MSSP API keys
 
-### Required workflows, targets and accounts keys
+### Required workflows, targets, accounts keys, global variables
 
 * None
 
@@ -77,9 +77,10 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ## Import the first workflow to add encoded AMP API keys to table
 
-### Required workflows, targets and accounts keys
+### Required workflows, targets, accounts keys, global variables
 
 * Main Workflow: [ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json) 
+* Global variable: **AMP_MSSP_credentials_table**
 
 ### Installation steps:
 
@@ -97,18 +98,19 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ![](screenshots/mssp-amp-run-add.png)
 
-5. You will now be prompted to enter the `CUSTOMER NAME`, `AMP API CLIENT ID` and `AMP API CLIENT SECRET`. Run this workflow as many times as needed (as many times as you have customers).
+5. You will now be prompted to enter the `CUSTOMER NAME`, `AMP API CLIENT ID` and `AMP API CLIENT SECRET`. Run this workflow as many times as needed (as many times as you have customers or when you add a new customer).
 
 ![](screenshots/mssp-amp-user-prompt.png)
 
 ## Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. 
 
-### Required workflows, targets and accounts keys
+### Required workflows, targets, accounts keys, global variables
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **Copy-Threat Response - Create Incident**, **AMP - Move Computer to Group**, **AMP - Isolate Host**, **Service Now - Create Incident**, **Service Now - Add Work Note to Incident**
 * Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
 * Target: **Private Intel Base**, **ServiceNow**, **AMP_Target**
 * Account keys: **Private Intel Base**, **ServiceNow**
+* Global variable: **AMP_MSSP_credentials_table**
 
 ### Installation steps:
 
@@ -126,12 +128,13 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ## Import the third workflow that sets a global variable containing the ID of the second workflow
 
-### Required workflows, targets and accounts keys
+### Required workflows, targets, accounts keys, global variables
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **List CTR response actions** 
 * Main Workflow: [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)
 * Target: **CTR API Target**
 * Account keys: **CTR_Credentials**
+* Global variable: **SNOW-RESPONSE-WF-ID**
 
 ### Installation steps:
 
@@ -149,12 +152,13 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 ## Import the fourth workflow that is triggered when ServiceNow incident is closed
 
-### Required workflows, targets and accounts keys
+### Required workflows, targets, accounts keys, global variables
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **AMP - Move Computer to Group**
 * Main Workflow: [SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)
 * Target: **CTR API Target**, **AMP_Target**
 * Account keys: **CTR_Credentials**
+* Global variable: **AMP_MSSP_credentials_table**, **SNOW-RESPONSE-WF-ID**
 
 ### Installation steps:
 
@@ -168,7 +172,20 @@ Below you can view the current workflows. Please feel inspired to add to it as y
 
 5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
 
-#### **IMPORTANT** this workflow is not working right now. Needs troubleshooting!!!
+6. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html). This can be done using the 2 extra **incident work notes** that have been added by the second workflow. The second ServiceNow incident worknote will contain a JSON object (shown below) that needs to be send as request body to SecureX using a REST POST method. The needed URL for this is put in the third  ServiceNow worknote. The JSON object as shown below is just missing the `snow-incident-id` which will be added by a ServiceNow script before the POST request is sent.
+
+```
+{
+  "observable_type": "file_path",
+  "observable_value": {
+    "snow-incident-id": "<add-snow-id-on-return>",
+    "amp-connector-guid": "WILL-CONTAIN-AMP-GUID",
+    "amp-group-guid": "WILL-CONTAIN-AMP-GROUP-GUID",
+    "securex-incident-id": "WILL-CONTAIN-SECUREX-ID",
+    "customer-name": "WILL-CONTAIN-CUSTOMER-NAME"
+  }
+}
+```
 
 ## Testing and running the solution
 
