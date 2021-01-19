@@ -25,7 +25,7 @@
         "is_atomic": false
       },
       "delete_workflow_instance": false,
-      "description": "This workflow uses the global table with encoded API credentials for the added AMP MSSP customers.  It will loop through these API keys and obtain the AMP events for the past 5 minutes. This workflow can be scheduled to run every 5 minutes. It is also possible to configure which events are deemed as important to retrieve. The suggestion is to retrieve only high priority events, such as events with a `HIGH` or `CRITICAL` severity. This workflow will then create a SecureX incident, as well as a ServiceNow incident.",
+      "description": "RUNS SCHEDULED\n\nThis workflow uses the global table with encoded API credentials for the added AMP MSSP customers.  It will loop through these API keys and obtain the AMP events for the past 5 minutes. This workflow can be scheduled to run every 5 minutes. It is also possible to configure which events are deemed as important to retrieve. The suggestion is to retrieve only high priority events, such as events with a `HIGH` or `CRITICAL` severity. This workflow will then create a SecureX incident, as well as a ServiceNow incident.",
       "display_name": "AMP-MSSP-TO-SNOW",
       "runtime_user": {
         "override_target_runtime_user": false,
@@ -444,22 +444,6 @@
                                     "object_type": "definition_activity"
                                   }
                                 ]
-                              },
-                              {
-                                "unique_name": "definition_activity_01LFW9VI5HKE95kMIQwXCEkMNF4QdgzsBPI",
-                                "name": "Condition Branch",
-                                "title": "Condition Branch",
-                                "type": "logic.condition_block",
-                                "base_type": "activity",
-                                "properties": {
-                                  "condition": {
-                                    "left_operand": "",
-                                    "operator": "eq",
-                                    "right_operand": ""
-                                  },
-                                  "display_name": "Condition Branch"
-                                },
-                                "object_type": "definition_activity"
                               }
                             ]
                           }
@@ -587,7 +571,7 @@
                               "continue_on_failure": false,
                               "display_name": "Service Now - Add Work Note to Incident",
                               "input": {
-                                "variable_workflow_01FMQTASNW19F198DyWHV14WHmkxNhmxaQu": "{\n\"snow-incident-id\": \"<add-snow-id-on-return>\",\n\"amp-connector-guid\": $activity.definition_activity_01KY6GTDQ1QCF6AmWTaGulGCwsk3sIxCuea.input.source_array[@].connector_guid$,\n\"amp-group-guid\": $activity.definition_activity_01KY6GTDQ1QCF6AmWTaGulGCwsk3sIxCuea.input.source_array[@].group_guids$,\n\"securex-incident-id\": $activity.definition_activity_01LF6H9RPMXSK7aepQWrWrBKZwqdyQRsid2.output.variable_workflow_01L3ABXK8VR4K2SvMCyWrY5RmSFsCgxEkQN$,\n}",
+                                "variable_workflow_01FMQTASNW19F198DyWHV14WHmkxNhmxaQu": "{\n\"observable_type\": \"file_path\",\n\"observable_value\": {\n\"snow-incident-id\": \"<add-snow-id-on-return>\",\n\"amp-connector-guid\": \"$activity.definition_activity_01KY6GTDQ1QCF6AmWTaGulGCwsk3sIxCuea.input.source_array[@].connector_guid$\",\n\"amp-group-guid\": \"$activity.definition_activity_01KY6GTDQ1QCF6AmWTaGulGCwsk3sIxCuea.input.source_array[@].group_guids$\",\n\"securex-incident-id\": \"$activity.definition_activity_01LF6H9RPMXSK7aepQWrWrBKZwqdyQRsid2.output.variable_workflow_01L3ABXK8VR4K2SvMCyWrY5RmSFsCgxEkQN$\",\n\"customer-name\": \"$activity.definition_activity_01L0NCHFESJST3h0E1RfiLcPkcx3v3CFXB7.input.source_array[@].customer_name$\"\n}\n}",
                                 "variable_workflow_01FMQTASNW78T0tgvbFoES84str3rrkOfBq": "v2",
                                 "variable_workflow_01FMQVGD9LTQK0vkSN3y7c0YHxc5cWQnVRt": "$activity.definition_activity_01KY77RJOIXX04hb1u6PLqgLLIMgoR4AY5K.output.variable_workflow_01C0F7F9L7IYM3YXHCizJhunwKtPlSJWEWM$"
                               },
@@ -903,11 +887,11 @@
     }
   },
   "atomic_workflows": [
-    "definition_workflow_01FLAVEFJ8QLQ7UEi6gFNp1yotu1K18VEZS",
-    "definition_workflow_01FLAR2IT5COJ1HFKMKazQkBlsJ72n028x9",
-    "definition_workflow_01KJXN35DBN5444diA78eCQ0YxYn8a7MMu6",
+    "definition_workflow_01FMQTAT3H5VC4NVbonulAhVztfqidbUGlJ",
     "definition_workflow_01L3ABXKKOSQE6M8m3u49pAioYEmcSDoZoV",
     "definition_workflow_01C0BYD0GI1KZ0mxScCSxVrfX70zrUdqLlW",
-    "definition_workflow_01FMQTAT3H5VC4NVbonulAhVztfqidbUGlJ"
+    "definition_workflow_01FLAVEFJ8QLQ7UEi6gFNp1yotu1K18VEZS",
+    "definition_workflow_01KJXN35DBN5444diA78eCQ0YxYn8a7MMu6",
+    "definition_workflow_01FLAR2IT5COJ1HFKMKazQkBlsJ72n028x9"
   ]
 }
