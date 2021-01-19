@@ -39,7 +39,7 @@
         "is_atomic": false
       },
       "delete_workflow_instance": false,
-      "description": "https://ciscosecurity.github.io/sxo-05-security-workflows/workflows/response/",
+      "description": "DO NOT CLICK FROM THREAT RESPONSE, TRIGGERED BY SNOW\n\nResponse workflow to reverse AMP actions and close SecureX incident and place external reference to ServiceNow incident. More info on how response workflows work: https://ciscosecurity.github.io/sxo-05-security-workflows/workflows/response/",
       "display_name": "SNOW-TO-AMP",
       "runtime_user": {
         "override_target_runtime_user": false,
@@ -100,6 +100,7 @@
             "properties": {
               "action_timeout": 180,
               "continue_on_failure": false,
+              "description": "observable_value",
               "display_name": "Read Table from JSON",
               "input_json": "$activity.definition_activity_01KY8FR6J79LD5X8JWIFBrv0VtTUWC4N9Sx.output.script_queries.json$",
               "jsonpath_query": "$.",
@@ -121,6 +122,10 @@
                 },
                 {
                   "column_name": "securex-incident-id",
+                  "column_type": "string"
+                },
+                {
+                  "column_name": "customer-name",
                   "column_type": "string"
                 }
               ]
@@ -181,6 +186,7 @@
                           "action_timeout": 180,
                           "continue_on_failure": false,
                           "display_name": "Grab AMP API key for customer",
+                          "input_table": "$global.variable_01L0MYHNLJWFB3Ny4PX1CukWfLoXMtcL7MA.global.variable_01L0MYHNLJWFB3Ny4PX1CukWfLoXMtcL7MA$",
                           "number_of_rows": {
                             "all_rows": true,
                             "at_most": false
@@ -268,7 +274,7 @@
                           "allow_auto_redirect": true,
                           "body": "{\n  \"status\": \"Closed\",\n  \"incident_time\": {\n    \"closed\": \"$workflow.definition_workflow_01KY7ZBF1JMX06T78jri5bhVzSLVdaSN6Qw.output.start_time$\"\n  },\n  \"external_references\": [\n    {\n      \"source_name\": \"ServiceNow\",\n      \"description\": \"This is the URL to the synced ServiceNow incident.\",\n      \"url\": \"$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].snow-incident-id$\"\n    }\n  ]\n}",
                           "content_type": "application/json",
-                          "continue_on_error_status_code": false,
+                          "continue_on_error_status_code": true,
                           "continue_on_failure": false,
                           "custom_headers": [
                             {
@@ -278,20 +284,68 @@
                           ],
                           "display_name": "Close SecureX incident and add SNOW ID",
                           "method": "PATCH",
-                          "relative_url": "$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].securex-incident-id$",
+                          "relative_url": "/ctia/incident/$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].securex-incident-id$",
                           "runtime_user": {
                             "override_target_runtime_user": false,
                             "target_default": true
                           },
                           "skip_execution": false,
                           "target": {
-                            "override_workflow_target": false,
-                            "override_workflow_target_group_criteria": false,
-                            "use_workflow_target": true,
-                            "use_workflow_target_group": false
+                            "override_workflow_target": true,
+                            "target_id": "definition_target_01FY04GSF89R66tMTam54wFWPLFn81QFsbL"
                           }
                         },
                         "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_01LM1KTISMJNY3T02ZVCDIS4vxwL8K4uRv6",
+                        "name": "Condition Block",
+                        "title": "INCIDENT CLOSED SUCCESS?",
+                        "type": "logic.if_else",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "INCIDENT CLOSED SUCCESS?",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "blocks": [
+                          {
+                            "unique_name": "definition_activity_01LM1KUG02OFN3YujJkStFJ6WXM4UfTmr6k",
+                            "name": "Condition Branch",
+                            "title": "STATUS CODE NOT 200",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$activity.definition_activity_01LFUKURQWJ717V1pvzTpCJ3tB76AcgkZpc.output.status_code$",
+                                "operator": "ne",
+                                "right_operand": 200
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "STATUS CODE NOT 200",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_01LM1LPCCRZVE7KQtBZeXWXIcrlmI5JmWXa",
+                                "name": "Completed",
+                                "title": "FAILED",
+                                "type": "logic.completed",
+                                "base_type": "activity",
+                                "properties": {
+                                  "completion_type": "failed-completed",
+                                  "continue_on_failure": false,
+                                  "display_name": "FAILED",
+                                  "result_message": "Fail to close incident status code: $activity.definition_activity_01LFUKURQWJ717V1pvzTpCJ3tB76AcgkZpc.output.status_code$",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -363,6 +417,22 @@
     }
   },
   "targets": {
+    "definition_target_01FY04GSF89R66tMTam54wFWPLFn81QFsbL": {
+      "unique_name": "definition_target_01FY04GSF89R66tMTam54wFWPLFn81QFsbL",
+      "name": "Private_CTIA_Target",
+      "title": "Private_CTIA_Target",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "description": "Private_CTIA_Target",
+        "disable_certificate_validation": true,
+        "display_name": "Private_CTIA_Target",
+        "host": "private.intel.amp.cisco.com",
+        "no_runtime_user": true,
+        "protocol": "https"
+      }
+    },
     "definition_target_01G9UGDY3W2665u1DW0TbC05Oq9PgsEzcKm": {
       "unique_name": "definition_target_01G9UGDY3W2665u1DW0TbC05Oq9PgsEzcKm",
       "name": "CTR Target for access token",
@@ -396,6 +466,64 @@
         "basic_username": "*****",
         "display_name": "CLEUR SEMSEC-2052"
       }
+    }
+  },
+  "variables": {
+    "variable_01L0MYHNLJWFB3Ny4PX1CukWfLoXMtcL7MA": {
+      "unique_name": "variable_01L0MYHNLJWFB3Ny4PX1CukWfLoXMtcL7MA",
+      "schema_id": "tabletype_01L0MWTPNG9LB0wNdXvayKxmQXu8O0CK94X",
+      "properties": {
+        "value": [
+          {
+            "column_data": {
+              "customer_name": "Test3",
+              "encoded_api_credentials": "OTFlZTQ4NTM3ZmY5N2Q1NjQ1M2E6ZmI3NTI4N2UtZjNhZS00NWM5LTgxMjktZGM5OTFhOWJlODEz"
+            }
+          },
+          {
+            "column_data": {
+              "customer_name": "Test4",
+              "encoded_api_credentials": "OTFlZTQ4NTM3ZmY5N2Q1NjQ1M2E6ZmI3NTI4N2UtZjNhZS00NWM5LTgxMjktZGM5OTFhOWJlODEz"
+            }
+          },
+          {
+            "column_data": {
+              "customer_name": "chrivand-test",
+              "encoded_api_credentials": "YmU2NmZmMTI3ZWY1NDY4OWZhMTM6MDcxZjQ5N2UtMWEzYS00NGI0LTlkNWQtNTQyZDkyMDBkZmMw"
+            }
+          }
+        ],
+        "scope": "global",
+        "name": "AMP_MSSP_credentials_table",
+        "type": "datatype.table",
+        "is_required": false,
+        "is_invisible": false
+      },
+      "object_type": "variable"
+    }
+  },
+  "table_types": {
+    "tabletype_01L0MWTPNG9LB0wNdXvayKxmQXu8O0CK94X": {
+      "unique_name": "tabletype_01L0MWTPNG9LB0wNdXvayKxmQXu8O0CK94X",
+      "data_type": "datatype.tabletype",
+      "display_name": "AMP_MSSP_credentials",
+      "description": "chrivand for mssp project",
+      "columns": [
+        {
+          "is_required": true,
+          "name": "customer_name",
+          "title": "Customer Name",
+          "type": "string"
+        },
+        {
+          "is_required": true,
+          "name": "encoded_api_credentials",
+          "title": "Encoded API Credentials",
+          "type": "string"
+        }
+      ],
+      "base_type": "datatype",
+      "object_type": "tabletype"
     }
   },
   "atomic_workflows": [
