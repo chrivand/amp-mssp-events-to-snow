@@ -171,7 +171,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
 
-6. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html). This can be done using the 2 extra **incident work notes** that have been added by the second workflow. The second ServiceNow incident worknote will contain a JSON object (shown below) that needs to be send as request body to SecureX using a REST POST method. The needed URL for this is put in the third  ServiceNow worknote. The JSON object as shown below is just missing the `snow-incident-id` which will be added by a ServiceNow script before the POST request is sent.
+6. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html). This can be done using the 2 extra **incident work notes** that have been added by the second workflow. The second ServiceNow incident worknote will contain a JSON object (shown below) that needs to be send as request body to SecureX using a REST POST method. The needed relative URL path for this is put in the third  ServiceNow worknote. You will need to create an OAuth profile using the SecureX API credentials that you have created earlier. The JSON object as shown below is just missing the `snow-incident-id` which will be added by a ServiceNow script before the POST request is sent.
 
 ```
 {
