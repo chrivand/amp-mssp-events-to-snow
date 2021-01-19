@@ -25,12 +25,6 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 3. The **third** workflow ([SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)) only needs to be run once initially. This workflow sets a global variable containing the ID of the second workflow. This is needed by ServiceNow (using an outbound API call) to run the fourth and final workflow of this solution.
 4. The **fourth** workflow ([SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)) will be able to close the SecureX incident when the ServiceNow incident is closed. It will also optionally be able to stop the AMP host isolation and move the host back to its original group. The ServiceNow incident ID will be added to the SecureX incident to fully sync the 2 systems. This workflow will be called via an outbound API call from ServiceNow.
 
-Below you can view the current workflows. Please feel inspired to add to it as you see fit. **Please always test thoroughly before using in production!**
-
-![](screenshots/mssp-amp-overview-add-new.png)
-
-**MORE SCREENSHOTS**
-
 # Installation
 
 ## Create table to store encoded MSSP API keys
