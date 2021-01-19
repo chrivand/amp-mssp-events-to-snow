@@ -11,12 +11,12 @@
         "properties": {
           "value": "",
           "scope": "input",
-          "name": "Customer Name",
+          "name": "AMP API Client ID",
           "type": "datatype.string",
           "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01L0N95PFT4P34267yTBHZ07GAlBJvTKlR6",
+        "unique_name": "variable_workflow_01L0NA4BV41425bxLx2u9cnZzJWTzBT6zZQ",
         "object_type": "variable_workflow"
       },
       {
@@ -24,12 +24,12 @@
         "properties": {
           "value": "",
           "scope": "input",
-          "name": "AMP API Client ID",
+          "name": "Customer Name",
           "type": "datatype.string",
           "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01L0NA4BV41425bxLx2u9cnZzJWTzBT6zZQ",
+        "unique_name": "variable_workflow_01L0N95PFT4P34267yTBHZ07GAlBJvTKlR6",
         "object_type": "variable_workflow"
       },
       {
@@ -51,7 +51,7 @@
         "is_atomic": false
       },
       "delete_workflow_instance": false,
-      "description": "This workflow takes in the customer name, API client ID and API client secret and stores them in a table. This table can be used by other workflows to loop through API credentials of various MSSP customers. Please note that the credentials are base 64 encoded, however are stored in the table.  SecureX is secured with MFA, but this still needs to be taken into consideration. ",
+      "description": "RUN EVERY TIME NEW CUSTOMER IS ADDED\n\nMake sure global table is set first as described in install insctructions! This workflow takes in the customer name, API client ID and API client secret and stores them in a table. This table can be used by other workflows to loop through API credentials of various MSSP customers. Please note that the credentials are base 64 encoded, however are stored in the global table variable.  SecureX is secured with MFA, but this still needs to be taken into consideration. ",
       "display_name": "ADD-AMP-MSSP-CREDS",
       "runtime_user": {
         "override_target_runtime_user": false,
@@ -122,8 +122,20 @@
       }
     ],
     "categories": [
-      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+      "category_01LFVC3JCKKBQ1UfvFwNNrvmyENRe5QPcKP"
     ]
+  },
+  "categories": {
+    "category_01LFVC3JCKKBQ1UfvFwNNrvmyENRe5QPcKP": {
+      "unique_name": "category_01LFVC3JCKKBQ1UfvFwNNrvmyENRe5QPcKP",
+      "name": "AMP-SNOW-PROJECT",
+      "title": "AMP-SNOW-PROJECT",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "CHRIVAND",
+      "category_type": "custom",
+      "object_type": "category"
+    }
   },
   "variables": {
     "variable_01L0MYHNLJWFB3Ny4PX1CukWfLoXMtcL7MA": {
@@ -168,14 +180,14 @@
       "columns": [
         {
           "is_required": true,
-          "name": "encoded_api_credentials",
-          "title": "Encoded API Credentials",
+          "name": "customer_name",
+          "title": "Customer Name",
           "type": "string"
         },
         {
           "is_required": true,
-          "name": "customer_name",
-          "title": "Customer Name",
+          "name": "encoded_api_credentials",
+          "title": "Encoded API Credentials",
           "type": "string"
         }
       ],
