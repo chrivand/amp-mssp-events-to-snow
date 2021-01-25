@@ -171,13 +171,13 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
 
-6. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html). This can be done using the 2 extra **incident work notes** that have been added by the second workflow. The second ServiceNow incident worknote will contain a JSON object (shown below) that needs to be send as request body to SecureX using a REST POST method. The needed relative URL path for this is put in the third  ServiceNow worknote. You will need to create an OAuth profile using the SecureX API credentials that you have created earlier. The JSON object as shown below is just missing the `snow-incident-id` which will be added by a ServiceNow script before the POST request is sent.
+6. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html) and a [Advanced Business Rule in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/script/business-rules/concept/c_BusinessRules.html). This can be done using the extra **incident work note** that have been added by the second workflow. The second ServiceNow incident worknote will contain a relative URL that needs to be send as outbound REST request to SecureX using a REST POST method. The needed relative URL path for this is put in this second ServiceNow worknote. You will need to create an [OAuth profile](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OAuth2ProfileTutorialGoogle.html) using the SecureX API credentials that you have created earlier. The JSON object as shown below is embeddedin the URL and will be able to be used when the ServiceNow incident is closed.
 
 ```
 {
   "observable_type": "file_path",
   "observable_value": {
-    "snow-incident-id": "<add-snow-id-on-return>",
+    "servicenow-incident-id": "WILL-CONTAIN-SYS-ID",
     "amp-connector-guid": "WILL-CONTAIN-AMP-GUID",
     "amp-group-guid": "WILL-CONTAIN-AMP-GROUP-GUID",
     "securex-incident-id": "WILL-CONTAIN-SECUREX-ID",
@@ -185,6 +185,48 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
   }
 }
 ```
+
+7. Set up the outbound REST web service with the following specs:
+
+* Name: **SecureX**
+* Endpoint: https://visibility.amp.cisco.com/iroh/iroh-response/${url_to_send}
+* In the Authentication tab under Authentication type: **OAuth 2.0**
+* In the Authentication tab under OAuth profile: create a new profile containing:
+    * Navigate to System OAuth > Application Registry.
+    * Click New.
+    * Select Connect to a third party OAuth Provider.
+    * Enter a Name for the OAuth provider. For this example, use **SecureX**.
+    * Enter the Client ID and Client Secret that you obtained from SecureX earlier, or create new API keys.
+    * Set the Default Grant type to Client Credentials.
+    * In the Authorization URL field, enter https://visibility.amp.cisco.com/iroh/oauth2/authorize (change region if needed)
+    * In the Token URL field, enter https://visibility.amp.cisco.com/iroh/oauth2/token (change region if needed)
+    * In the Redirect URL field, enter https://<instance>.service-now.com/oauth_redirect.do (this might be auto-filled)
+    * In the Token Revocation URL field, enter https://visibility.amp.cisco.com/iroh/oauth2/app-grant/
+    * Right-click the form header and select Save.
+    * A new OAuth Entity Profile record is created.
+    * You can test if this works by clicking **Get OAuth Token**.
+* Now click on the Default GET request and change the name to POST and the HTTP method to POST too. 
+* In the HTTP Request tab, add 2 headers:
+    * Name: `accept` Value: `application/json`
+    * Name: `Content-Type` Value: `application/json`
+* Click on **Auto-generate variables** and this automatically turns `${url_to_send}` into a Variable Substitution.
+* Click on Preview Script Usage and copy paste the content. You will need this for the ServiceNow business rule that we are creating next!
+
+8. Now set up a new Advanced Business Rule:
+
+* Name: **SecureX close incident rule**
+* Table: Incident [incident]
+* Check the box for **Advanced**
+* When to run: 
+    * When: **before** and select the **Update** checkbox.
+    * Add 2 conditions:
+        * `State` `is` `Closed` AND
+        * `Short description` `starts with` `[SecureX]`
+* Go to the **Advanced** tab and copy paste your **Script** here. Change line 3 to:
+```javascript
+ r.setStringParameterNoEscape('url_to_send', current.work_notes_list[1]);
+```
+* Right-click the form header and select Save.
 
 ## Testing and running the solution
 
