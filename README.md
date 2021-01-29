@@ -21,9 +21,21 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 ## Features and flow
 1. The **first** workflow ([ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json)) will be able to obtain user input to add Cisco Secure Endpoint (formerly known as Advanced Malware Protection for Endpoints (AMP4E)) API Credentials + customer name and store them base 64 encoded in a table. Please note that the credentials are base 64 encoded, however are stored in the global table variable. SecureX is secured with MFA, but this still needs to be taken into consideration. This workflow only needs to be run initially and every time you add a customer to your MSSP portal.
-2. The **second** workflow ([AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)) will loop through these API keys and obtain the AMP events for the past 5 minutes. This workflow can be scheduled to run every 5 minutes (or otherwise). It is also possible to configure which events are deemed as important to retrieve. The suggestion is to retrieve only high priority events, such as events with a `HIGH` or `CRITICAL` severity. This workflow will then create a SecureX incident, as well as a ServiceNow incident. It will make sure the ServiceNow incidents has information to close the loop back to SecureX by closing the incident. Optionally this workflow is able to isolate the AMP host or move it to a Triage group. 
-3. The **third** workflow ([SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)) only needs to be run once initially. This workflow sets a global variable containing the ID of the second workflow. This is needed by ServiceNow (using an outbound API call) to run the fourth and final workflow of this solution.
-4. The **fourth** workflow ([SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)) will be able to close the SecureX incident when the ServiceNow incident is closed. It will also optionally be able to stop the AMP host isolation and move the host back to its original group. The ServiceNow incident ID will be added to the SecureX incident to fully sync the 2 systems. This workflow will be called via an outbound API call from ServiceNow.
+2. The **second** workflow ([AMP-MSSP-TO-SERVICENOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)) will loop through these API keys and obtain the AMP events for the past 5 minutes. This workflow can be scheduled to run every 5 minutes (or otherwise). It is also possible to configure which events are deemed as important to retrieve. The suggestion is to retrieve only high priority events, such as events with a `HIGH` or `CRITICAL` severity. This workflow will then create a SecureX incident, as well as a ServiceNow incident. It will make sure the ServiceNow incidents has information to close the loop back to SecureX by closing the incident. Optionally this workflow is able to isolate the AMP host or move it to a Triage group. 
+3. The **third** workflow ([SET-SERVICENOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)) only needs to be run once initially. This workflow sets a global variable containing the ID of the second workflow. This is needed by ServiceNow (using an outbound API call) to run the fourth and final workflow of this solution.
+4. The **fourth** workflow ([SERVICENOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)) will be able to close the SecureX incident when the ServiceNow incident is closed. It will also optionally be able to stop the AMP host isolation and move the host back to its original group. The ServiceNow incident ID will be added to the SecureX incident to fully sync the 2 systems. This workflow will be called via an outbound API call from ServiceNow.
+
+**SecureX (AMP event) incident in ServiceNow:**
+![](screenshots/servicenow_incident.png)
+
+**Closing an incident in ServiceNow:**
+![](screenshots/servicenow_closed.png)
+
+**Result in SecureX orchestration:**
+![](screenshots/servicenow_runsuccess.png)
+
+**Result in SecureX incident manager:**
+![](screenshots/servicenow_runsuccess.png)
 
 # Installation
 
@@ -186,33 +198,43 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 }
 ```
 
-7. Set up the outbound REST web service with the following specs:
+7. Set up the **outbound REST web service** with the following specs:
 
 * Name: **SecureX**
 * Endpoint: https://visibility.amp.cisco.com/iroh/iroh-response/${url_to_send}
+
+![](screenshots/servicenow_endpoint.png)
+
 * In the Authentication tab under Authentication type: **OAuth 2.0**
-* In the Authentication tab under OAuth profile: create a new profile containing:
-    * Navigate to System OAuth > Application Registry.
-    * Click New.
-    * Select Connect to a third party OAuth Provider.
-    * Enter a Name for the OAuth provider. For this example, use **SecureX**.
-    * Enter the Client ID and Client Secret that you obtained from SecureX earlier, or create new API keys.
-    * Set the Default Grant type to Client Credentials.
-    * In the Authorization URL field, enter https://visibility.amp.cisco.com/iroh/oauth2/authorize (change region if needed)
-    * In the Token URL field, enter https://visibility.amp.cisco.com/iroh/oauth2/token (change region if needed)
-    * In the Redirect URL field, enter https://<instance>.service-now.com/oauth_redirect.do (this might be auto-filled)
-    * In the Token Revocation URL field, enter https://visibility.amp.cisco.com/iroh/oauth2/app-grant/
-    * Right-click the form header and select Save.
-    * A new OAuth Entity Profile record is created.
+* In the Authentication tab under **OAuth profile**: create a new profile containing:
+    * Navigate to **System OAuth** > **Application Registry**.
+    * Click **New**.
+    * Select **Connect** to a third party OAuth Provider.
+    * Enter a **Name** for the OAuth provider. For this example, use **SecureX**.
+    * Enter the `Client ID` and `Client Secret` that you obtained from SecureX earlier, or create new API keys (might be better security wise).
+    * Set the **Default Grant type** to **Client Credentials**.
+    * In the **Authorization URL** field, enter: `https://visibility.amp.cisco.com/iroh/oauth2/authorize` (change region if needed)
+    * In the **Token URL** field, enter: `https://visibility.amp.cisco.com/iroh/oauth2/token` (change region if needed)
+    * In the **Redirect URL** field, enter: `https://<instance>.service-now.com/oauth_redirect.do` (this might be auto-filled)
+    * In the **Token Revocation URL** field, enter: `https://visibility.amp.cisco.com/iroh/oauth2/app-grant/`
+    * Right-click the form header and select **Save**.
+    * A new **OAuth Entity Profile** record is created.
     * You can test if this works by clicking **Get OAuth Token**.
+    
+![](screenshots/servicenow_oauthprofile.png)
+   
 * Now click on the Default GET request and change the name to POST and the HTTP method to POST too. 
+
+![](screenshots/servicenow_http_method.png)
+
 * In the HTTP Request tab, add 2 headers:
     * Name: `accept` Value: `application/json`
     * Name: `Content-Type` Value: `application/json`
 * Click on **Auto-generate variables** and this automatically turns `${url_to_send}` into a Variable Substitution.
-* Click on Preview Script Usage and copy paste the content. You will need this for the ServiceNow business rule that we are creating next!
+* Click on **Preview Script Usage** and copy paste the content. You will need this for the ServiceNow business rule that we are creating next!
 
-8. Now set up a new Advanced Business Rule:
+    
+8. Now set up a new **Advanced Business Rule**:
 
 * Name: **SecureX close incident rule**
 * Table: Incident [incident]
@@ -221,12 +243,47 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
     * When: **before** and select the **Update** checkbox.
     * Add 2 conditions:
         * `State` `is` `Closed` AND
-        * `Short description` `starts with` `[SecureX]`
-* Go to the **Advanced** tab and copy paste your **Script** here. Change line 3 to:
+        * `Short description` `ends with` `[SecureX]`
+        
+![](screenshots/servicenow_whenrun.png)
+
+* Go to the **Advanced** tab and copy paste your **Script** here. Add two line before `line 3`, and change `line 3` to user the newly created `work_note_uri` variable:
 ```javascript
- r.setStringParameterNoEscape('url_to_send', current.work_notes_list[1]);
+ var work_note_raw = current.work_notes.getJournalEntry(1);
+ var work_note_uri = work_note_raw.split('\n');
+ r.setStringParameterNoEscape('url_to_send', work_note_uri[1]);
 ```
-* Right-click the form header and select Save.
+* The total will now look like this:
+
+```javascript
+try { 
+ var r = new sn_ws.RESTMessageV2('SecureX Response API', 'Trigger Response');
+ var work_note_raw = current.work_notes.getJournalEntry(1);
+ var work_note_uri = work_note_raw.split('\n');
+ r.setStringParameterNoEscape('url_to_send', work_note_uri[1]);
+
+//override authentication profile 
+//authentication type ='basic'/ 'oauth2'
+//r.setAuthenticationProfile(authentication type, profile name);
+
+//set a MID server name if one wants to run the message on MID
+//r.setMIDServer('MY_MID_SERVER');
+
+//if the message is configured to communicate through ECC queue, either
+//by setting a MID server or calling executeAsync, one needs to set skip_sensor
+//to true. Otherwise, one may get an intermittent error that the response body is null
+//r.setEccParameter('skip_sensor', true);
+
+ var response = r.execute();
+ var responseBody = response.getBody();
+ var httpStatus = response.getStatusCode();
+}
+catch(ex) {
+ var message = ex.message;
+}
+```
+
+* Right-click the form header and select **Save**.
 
 ## Testing and running the solution
 
