@@ -34,8 +34,8 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 **Result in SecureX orchestration:**<br/>
 ![](screenshots/servicenow_runsuccess.png)
 
-**Result in SecureX incident manager:**<br/>
-![](screenshots/servicenow_runsuccess.png)
+**Result in SecureX incident manager (in ribbon):**<br/>
+![](screenshots/secureX_incident.png)
 
 # Installation
 
