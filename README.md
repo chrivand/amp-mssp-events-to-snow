@@ -26,16 +26,16 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 4. The **fourth** workflow ([SERVICENOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)) will be able to close the SecureX incident when the ServiceNow incident is closed. It will also optionally be able to stop the AMP host isolation and move the host back to its original group. The ServiceNow incident ID will be added to the SecureX incident to fully sync the 2 systems. This workflow will be called via an outbound API call from ServiceNow.
 
 **SecureX (AMP event) incident in ServiceNow:**<br/>
-![](screenshots/servicenow_incident.png)
+![](screenshots/servicenow_incident.png =50x)
 
 **Closing an incident in ServiceNow:**<br/>
-![](screenshots/servicenow_closed.png)
+![](screenshots/servicenow_closed.png =50x)
 
 **Result in SecureX orchestration:**<br/>
-![](screenshots/servicenow_runsuccess.png)
+![](screenshots/servicenow_runsuccess.png =50x)
 
 **Result in SecureX incident manager:**<br/>
-![](screenshots/servicenow_runsuccess.png)
+![](screenshots/servicenow_runsuccess.png =50x)
 
 # Installation
 
