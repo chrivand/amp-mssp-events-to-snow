@@ -1,11 +1,24 @@
 {
   "workflow": {
     "unique_name": "definition_workflow_01KY7ZBF1JMX06T78jri5bhVzSLVdaSN6Qw",
-    "name": "SNOW-TO-AMP",
-    "title": "SNOW-TO-AMP",
+    "name": "SERVICENOW-TO-AMP",
+    "title": "SERVICENOW-TO-AMP",
     "type": "generic.workflow",
     "base_type": "workflow",
     "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "observable_type",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KY80472BPF05ooQIep6loID3HvAOZfaVV",
+        "object_type": "variable_workflow"
+      },
       {
         "schema_id": "datatype.string",
         "properties": {
@@ -19,19 +32,6 @@
         },
         "unique_name": "variable_workflow_01KY80E48V2LW4msDCbPqDvzqJHs5HNzOLo",
         "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "input",
-          "name": "observable_type",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01KY80472BPF05ooQIep6loID3HvAOZfaVV",
-        "object_type": "variable_workflow"
       }
     ],
     "properties": {
@@ -40,15 +40,14 @@
       },
       "delete_workflow_instance": false,
       "description": "DO NOT CLICK FROM THREAT RESPONSE, TRIGGERED BY SNOW\n\nResponse workflow to reverse AMP actions and close SecureX incident and place external reference to ServiceNow incident. More info on how response workflows work: https://ciscosecurity.github.io/sxo-05-security-workflows/workflows/response/",
-      "display_name": "SNOW-TO-AMP",
+      "display_name": "SERVICENOW-TO-AMP",
       "runtime_user": {
         "override_target_runtime_user": false,
         "specify_on_workflow_start": false,
         "target_default": true
       },
       "target": {
-        "target_type": "web-service.endpoint",
-        "specify_on_workflow_start": true
+        "no_target": true
       }
     },
     "object_type": "definition_workflow",
@@ -210,7 +209,7 @@
                           "continue_on_failure": false,
                           "display_name": "AMP - Move Computer to Group",
                           "input": {
-                            "variable_workflow_01FLAR2I50UOM44MGCGKMuikBplJTk7llMO": "$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].amp-guid$",
+                            "variable_workflow_01FLAR2I50UOM44MGCGKMuikBplJTk7llMO": "$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].amp-group-guid$",
                             "variable_workflow_01FLASNK8V9YK5XTLMywR1jQfrtbWiM2Yp5": "$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].amp-group-guid$"
                           },
                           "runtime_user": {
@@ -218,8 +217,9 @@
                           },
                           "skip_execution": false,
                           "target": {
-                            "target_type": "web-service.endpoint",
-                            "use_workflow_target": true
+                            "override_workflow_target": true,
+                            "target_id": "definition_target_01L0NGXWNOBVX49Kul73VTbsyIPhR6hDCqf",
+                            "target_type": "web-service.endpoint"
                           },
                           "workflow_id": "definition_workflow_01FLAR2IT5COJ1HFKMKazQkBlsJ72n028x9"
                         },
@@ -263,6 +263,25 @@
                         "object_type": "definition_activity"
                       },
                       {
+                        "unique_name": "definition_activity_01M0EZSKZ41J92JY1J4CIO9zFHo7NWy0irF",
+                        "name": "Split String",
+                        "title": "Split SecureX incident ID",
+                        "type": "core.splitstring",
+                        "base_type": "activity",
+                        "properties": {
+                          "boundaries": [
+                            {
+                              "boundary": "/"
+                            }
+                          ],
+                          "continue_on_failure": false,
+                          "display_name": "Split SecureX incident ID",
+                          "input_string": "$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].securex-incident-id$",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
                         "unique_name": "definition_activity_01LFUKURQWJ717V1pvzTpCJ3tB76AcgkZpc",
                         "name": "HTTP Request",
                         "title": "Close SecureX incident and add SNOW ID",
@@ -272,7 +291,7 @@
                           "accept": "application/json",
                           "action_timeout": 180,
                           "allow_auto_redirect": true,
-                          "body": "{\n  \"status\": \"Closed\",\n  \"incident_time\": {\n    \"closed\": \"$workflow.definition_workflow_01KY7ZBF1JMX06T78jri5bhVzSLVdaSN6Qw.output.start_time$\"\n  },\n  \"external_references\": [\n    {\n      \"source_name\": \"ServiceNow\",\n      \"description\": \"This is the URL to the synced ServiceNow incident.\",\n      \"url\": \"$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].snow-incident-id$\"\n    }\n  ]\n}",
+                          "body": "{\n  \"status\": \"Closed\",\n  \"incident_time\": {\n    \"closed\": \"$workflow.definition_workflow_01KY7ZBF1JMX06T78jri5bhVzSLVdaSN6Qw.output.start_time$\"\n  },\n  \"external_references\": [\n    {\n      \"source_name\": \"ServiceNow\",\n      \"description\": \"ServiceNow incident system ID.\",\n      \"url\": \"https://xxx.service-now.com/incident.do?sys_id=$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].snow-incident-id$\"\n    }\n  ]\n}",
                           "content_type": "application/json",
                           "continue_on_error_status_code": true,
                           "continue_on_failure": false,
@@ -284,7 +303,7 @@
                           ],
                           "display_name": "Close SecureX incident and add SNOW ID",
                           "method": "PATCH",
-                          "relative_url": "/ctia/incident/$activity.definition_activity_01KY88PXFKD373zZubPg6stFv7wLko3mRgQ.output.read_table_from_json[0].securex-incident-id$",
+                          "relative_url": "/ctia/incident/$activity.definition_activity_01M0EZSKZ41J92JY1J4CIO9zFHo7NWy0irF.output.parts[-1]$",
                           "runtime_user": {
                             "override_target_runtime_user": false,
                             "target_default": true
@@ -450,6 +469,23 @@
         "path": "/iroh",
         "protocol": "https"
       }
+    },
+    "definition_target_01L0NGXWNOBVX49Kul73VTbsyIPhR6hDCqf": {
+      "unique_name": "definition_target_01L0NGXWNOBVX49Kul73VTbsyIPhR6hDCqf",
+      "name": "AMP Target MSSP",
+      "title": "AMP Target MSSP",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "AMP Target MSSP",
+        "host": "api.amp.cisco.com",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "path": "/v1/",
+        "protocol": "https"
+      }
     }
   },
   "runtime_users": {
@@ -476,19 +512,19 @@
         "value": [
           {
             "column_data": {
-              "customer_name": "Test3",
+              "customer_name": "Company A",
               "encoded_api_credentials": "OTFlZTQ4NTM3ZmY5N2Q1NjQ1M2E6ZmI3NTI4N2UtZjNhZS00NWM5LTgxMjktZGM5OTFhOWJlODEz"
             }
           },
           {
             "column_data": {
-              "customer_name": "Test4",
+              "customer_name": "Company B",
               "encoded_api_credentials": "OTFlZTQ4NTM3ZmY5N2Q1NjQ1M2E6ZmI3NTI4N2UtZjNhZS00NWM5LTgxMjktZGM5OTFhOWJlODEz"
             }
           },
           {
             "column_data": {
-              "customer_name": "chrivand-test",
+              "customer_name": "Company X",
               "encoded_api_credentials": "YmU2NmZmMTI3ZWY1NDY4OWZhMTM6MDcxZjQ5N2UtMWEzYS00NGI0LTlkNWQtNTQyZDkyMDBkZmMw"
             }
           }
@@ -527,7 +563,7 @@
     }
   },
   "atomic_workflows": [
-    "definition_workflow_01FLAR2IT5COJ1HFKMKazQkBlsJ72n028x9",
-    "definition_workflow_01KJXN35DBN5444diA78eCQ0YxYn8a7MMu6"
+    "definition_workflow_01KJXN35DBN5444diA78eCQ0YxYn8a7MMu6",
+    "definition_workflow_01FLAR2IT5COJ1HFKMKazQkBlsJ72n028x9"
   ]
 }
