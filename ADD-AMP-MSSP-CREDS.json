@@ -11,12 +11,12 @@
         "properties": {
           "value": "",
           "scope": "input",
-          "name": "AMP API Client ID",
+          "name": "Customer Name",
           "type": "datatype.string",
           "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01L0NA4BV41425bxLx2u9cnZzJWTzBT6zZQ",
+        "unique_name": "variable_workflow_01L0N95PFT4P34267yTBHZ07GAlBJvTKlR6",
         "object_type": "variable_workflow"
       },
       {
@@ -24,12 +24,12 @@
         "properties": {
           "value": "",
           "scope": "input",
-          "name": "Customer Name",
+          "name": "AMP API Client ID",
           "type": "datatype.string",
           "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01L0N95PFT4P34267yTBHZ07GAlBJvTKlR6",
+        "unique_name": "variable_workflow_01L0NA4BV41425bxLx2u9cnZzJWTzBT6zZQ",
         "object_type": "variable_workflow"
       },
       {
@@ -145,19 +145,19 @@
         "value": [
           {
             "column_data": {
-              "customer_name": "Test3",
+              "customer_name": "Company A",
               "encoded_api_credentials": "OTFlZTQ4NTM3ZmY5N2Q1NjQ1M2E6ZmI3NTI4N2UtZjNhZS00NWM5LTgxMjktZGM5OTFhOWJlODEz"
             }
           },
           {
             "column_data": {
-              "customer_name": "Test4",
+              "customer_name": "Company B",
               "encoded_api_credentials": "OTFlZTQ4NTM3ZmY5N2Q1NjQ1M2E6ZmI3NTI4N2UtZjNhZS00NWM5LTgxMjktZGM5OTFhOWJlODEz"
             }
           },
           {
             "column_data": {
-              "customer_name": "chrivand-test",
+              "customer_name": "Company X",
               "encoded_api_credentials": "YmU2NmZmMTI3ZWY1NDY4OWZhMTM6MDcxZjQ5N2UtMWEzYS00NGI0LTlkNWQtNTQyZDkyMDBkZmMw"
             }
           }
