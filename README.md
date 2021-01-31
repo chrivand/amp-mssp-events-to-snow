@@ -28,14 +28,14 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 **SecureX (AMP event) incident in ServiceNow:**<br/>
 ![](screenshots/servicenow_incident.png)
 
+**SecureX (AMP event) incident in SecureX incident manager (in ribbon):**<br/>
+![](screenshots/secureX_incident.png)
+
 **Closing an incident in ServiceNow:**<br/>
 ![](screenshots/servicenow_closed.png)
 
-**Result in SecureX orchestration:**<br/>
+**Results in SecureX orchestration workflow to be run which also closes SecureX incident and adds ServiceNow reference:**<br/>
 ![](screenshots/servicenow_runsuccess.png)
-
-**Result in SecureX incident manager (in ribbon):**<br/>
-![](screenshots/secureX_incident.png)
 
 # Installation
 
