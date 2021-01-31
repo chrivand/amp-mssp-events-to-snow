@@ -113,7 +113,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 ### Required workflows, targets, accounts keys, global variables
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **Copy-Threat Response - Create Incident**, **AMP - Move Computer to Group**, **AMP - Isolate Host**, **Service Now - Create Incident**, **Service Now - Add Work Note to Incident**
-* Main Workflow: [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json)
+* Main Workflow: [AMP-MSSP-TO-SERVICENOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SERVICENOW.json)
 * Target: **Private Intel Base**, **ServiceNow**, **AMP_Target**
 * Account keys: **Private Intel Base**, **ServiceNow**
 * Global variable: **AMP_MSSP_credentials_table**
@@ -142,7 +142,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 ### Required workflows, targets, accounts keys, global variables
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **List CTR response actions** 
-* Main Workflow: [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json)
+* Main Workflow: [SET-SERVICENOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SERVICENOW-RESPONSE-WF-ID.json)
 * Target: **CTR API Target**
 * Account keys: **CTR_Credentials**
 * Global variable: **SNOW-RESPONSE-WF-ID**
@@ -166,7 +166,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 ### Required workflows, targets, accounts keys, global variables
 
 * Atomic Workflow: **Generate Access Token for SecureX**, **AMP - Move Computer to Group**
-* Main Workflow: [SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json)
+* Main Workflow: [SERVICENOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SERVICENOW-TO-AMP.json)
 * Target: **CTR API Target**, **AMP_Target**
 * Account keys: **CTR_Credentials**
 * Global variable: **AMP_MSSP_credentials_table**, **SNOW-RESPONSE-WF-ID**
