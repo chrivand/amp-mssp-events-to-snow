@@ -37,7 +37,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 **Results in SecureX orchestration workflow to be run which also closes SecureX incident and adds ServiceNow reference:**<br/>
 ![](screenshots/servicenow_runsuccess.png)
 
-# Installation
+# Installation (plan around 30-45 minutes for this, incl. coffee break)
 
 ## Create table to store encoded MSSP API keys
 
