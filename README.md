@@ -124,7 +124,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 2. Click on **IMPORT** to import the workflow.
 
-3. Click on **Browse** and copy paste the content of the [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json) file inside of the text window. 
+3. Click on **Browse** and copy paste the content of the [AMP-MSSP-TO-SERVICENOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SERVICENOW.json) file inside of the text window. 
 
 4. Click on **IMPORT**. You might receive an error that information is missing.
 
@@ -144,7 +144,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 * Main Workflow: [SERVICENOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SERVICENOW-TO-AMP.json)
 * Target: **CTR API Target**, **AMP_Target**
 * Account keys: **CTR_Credentials**
-* Global variable: **AMP_MSSP_credentials_table**, **SNOW-RESPONSE-WF-ID**
+* Global variable: **AMP_MSSP_credentials_table**, **SERVICENOW-RESPONSE-WF-ID**
 
 ### Installation steps:
 
@@ -152,7 +152,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 2. Click on **IMPORT** to import the workflow.
 
-3. Click on **Browse** and copy paste the content of the [SNOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SNOW-TO-AMP.json) file inside of the text window. 
+3. Click on **Browse** and copy paste the content of the [SERVICENOW-TO-AMP.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SERVICENOW-TO-AMP.json) file inside of the text window. 
 
 4. Click on **IMPORT**. You might receive an error that information is missing.
 
@@ -280,7 +280,7 @@ catch(ex) {
 
 2. Click on **IMPORT** to import the workflow.
 
-3. Click on **Browse** and copy paste the content of the [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json) file inside of the text window. 
+3. Click on **Browse** and copy paste the content of the [SET-SERVICENOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SERVICENOW-RESPONSE-WF-ID.json) file inside of the text window. 
 
 4. Click on **IMPORT**. You might receive an error that information is missing.
 
@@ -290,9 +290,9 @@ catch(ex) {
 
 ## Testing and running the solution
 
-1. Now it is time to test, click on **RUN** in the top right of your window, and everything shopuld be working now. If not try troubleshooting by click on the activity that is colored red. 
+1. Now it is time to test the **AMP-MSSP-TO-SERVICENOW** workflow: click on **RUN** in the top right of your window, and everything should be working now. If not try troubleshooting by click on the activity that is colored red. 
 
-2. As a final step you could choose to enable to scheduled trigger for the [AMP-MSSP-TO-SNOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SNOW.json) workflow. This is recommended, as the workflow only retrieves the security events of the last 5 minutes. By scheduling it, the Security analysts will be updated every hour for potential new malicious activity. To enable the trigger, click on the hyperlink below and uncheck the `DISABLE TRIGGER` checkbox. This can be found in the workflow properties in the right menu pane. 
+2. As a final step you could choose to enable to scheduled trigger for the [AMP-MSSP-TO-SERVICENOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SERVICENOW.json) workflow. This is recommended, as the workflow only retrieves the security events of the last 5 minutes. By scheduling it, the Security analysts will be updated every hour for potential new malicious activity. To enable the trigger, click on the hyperlink below and uncheck the `DISABLE TRIGGER` checkbox. This can be found in the workflow properties in the right menu pane. 
 
 ![](screenshots/trigger-5min.png)
 
