@@ -134,7 +134,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 6. It is important to consider which events are deemed important for your MSSP offering. A recommendation is to use all events which require human investigation from your SOC.  You can find all `event_types` in the [AMP API docs](https://api-docs.amp.cisco.com/api_actions/details?api_action=GET+%2Fv1%2Fevent_types&api_host=api.amp.cisco.com&api_resource=Event+Type&api_version=v1). You will need to change the **Get recent High Priority events from AMP** action by changing the event types in the **RELATIVE URL**. Below is an example of all event_types which you might want to include. This is set as default in the current workflow:
 
-```json   [1090519054,2164260880,2164260893,1090524040,1090524041,1090519084,1107296257,1107296258,1107296261,1107296262,1107296263,1107296264,1107296266,1107296267,1107296268,1107296269,1107296270,1107296271,1107296272,1107296273,1107296274,1107296275,1107296276,1091567670,1107296277,1107296278,1107296280,1107296281,1107296282,1107296284,1107296283,2164260931,1090519081,1090519105,1090519102,553648215]
+```   [1090519054,2164260880,2164260893,1090524040,1090524041,1090519084,1107296257,1107296258,1107296261,1107296262,1107296263,1107296264,1107296266,1107296267,1107296268,1107296269,1107296270,1107296271,1107296272,1107296273,1107296274,1107296275,1107296276,1091567670,1107296277,1107296278,1107296280,1107296281,1107296282,1107296284,1107296283,2164260931,1090519081,1090519105,1090519102,553648215]
 ```
 
 ## Import the third workflow that sets a global variable containing the ID of the second workflow
