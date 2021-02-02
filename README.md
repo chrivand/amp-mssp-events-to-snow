@@ -2,7 +2,7 @@
 ![License: CISCO](https://img.shields.io/badge/License-CISCO-blue.svg)
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/)
 
-# SecureX orchestration workflow: AMP MSSP customer events to SecureX incident and ServiceNow incident [DRAFT]
+# SecureX orchestration workflow: AMP MSSP customer events to SecureX incident and ServiceNow incident
 
 This is a set of sample workflows to work with the MSSP environment of Cisco Secure Endpoint (formerly known as Advanced Malware Protection for Endpoints (AMP4E)). It can obtain events from the various customers and create Securex and ServiceNow incidents based on these security events. When the incident in ServiceNow is closed, this will automatically close the SecureX incident too.
 
