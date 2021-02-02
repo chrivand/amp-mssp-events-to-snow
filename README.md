@@ -13,8 +13,8 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
     1. [Create table to store encoded MSSP API keys](#create-table-to-store-encoded-mssp-api-keys)
     2. [Import the first workflow to add encoded AMP API keys to table](#import-the-first-workflow-to-add-encoded-amp-api-keys-to-table)
     3. [Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents](#import-the-second-workflow-to-retrieve-amp-events-and-create-securex-and-servicenow-incidents)
-    4. [Import the third workflow that sets a global variable containing the ID of the second workflow](#import-the-third-workflow-that-sets-a-global-variable-containing-the-id-of-the-second-workflow)
-    5. [Import the fourth workflow that is triggered when ServiceNow incident is closed](#import-the-fourth-workflow-that-is-triggered-when-servicenow-incident-is-closed)
+    4. [Import the third workflow that is triggered when ServiceNow incident is closed](#import-the-third-workflow-that-is-triggered-when-servicenow-incident-is-closed)
+    5. [Import the fourth workflow that sets a global variable containing the ID of the third workflow](#import-the-fourth-workflow-that-sets-a-global-variable-containing-the-id-of-the-third-workflow)
     6. [Testing and running the solution](#testing-and-running-the-solution)
 3. [Notes](#notes)
 4. [Author(s)](#authors)
@@ -136,31 +136,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 `[1090519054,2164260880,2164260893,1090524040,1090524041,1090519084,1107296257,1107296258,1107296261,1107296262,1107296263,1107296264,1107296266,1107296267,1107296268,1107296269,1107296270,1107296271,1107296272,1107296273,1107296274,1107296275,1107296276,1091567670,1107296277,1107296278,1107296280,1107296281,1107296282,1107296284,1107296283,2164260931,1090519081,1090519105,1090519102,553648215]`
 
-## Import the third workflow that sets a global variable containing the ID of the second workflow
-
-### Required workflows, targets, accounts keys, global variables
-
-* Atomic Workflow: **Generate Access Token for SecureX**, **List CTR response actions** 
-* Main Workflow: [SET-SERVICENOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SERVICENOW-RESPONSE-WF-ID.json)
-* Target: **CTR API Target**
-* Account keys: **CTR_Credentials**
-* Global variable: **SNOW-RESPONSE-WF-ID**
-
-### Installation steps:
-
-1. Browse to the **Workflows** section in the left pane menu.
-
-2. Click on **IMPORT** to import the workflow.
-
-3. Click on **Browse** and copy paste the content of the [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json) file inside of the text window. 
-
-4. Click on **IMPORT**. You might receive an error that information is missing.
-
-5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
-
-6. After importing this workflow, you can open it and then click **RUN** in the top right corner. You will not have to use this workflow again after taking this action.
-
-## Import the fourth workflow that is triggered when ServiceNow incident is closed
+## Import the third workflow that is triggered when ServiceNow incident is closed
 
 ### Required workflows, targets, accounts keys, global variables
 
@@ -287,6 +263,30 @@ catch(ex) {
 ```
 
 * Right-click the form header and select **Save**.
+
+## Import the fourth workflow that sets a global variable containing the ID of the third workflow
+
+### Required workflows, targets, accounts keys, global variables
+
+* Atomic Workflow: **Generate Access Token for SecureX**, **List CTR response actions** 
+* Main Workflow: [SET-SERVICENOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SERVICENOW-RESPONSE-WF-ID.json)
+* Target: **CTR API Target**
+* Account keys: **CTR_Credentials**
+* Global variable: **SNOW-RESPONSE-WF-ID**
+
+### Installation steps:
+
+1. Browse to the **Workflows** section in the left pane menu.
+
+2. Click on **IMPORT** to import the workflow.
+
+3. Click on **Browse** and copy paste the content of the [SET-SNOW-RESPONSE-WF-ID.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/SET-SNOW-RESPONSE-WF-ID.json) file inside of the text window. 
+
+4. Click on **IMPORT**. You might receive an error that information is missing.
+
+5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
+
+6. After importing this workflow, you can open it and then click **RUN** in the top right corner. You will not have to use this workflow again after taking this action.
 
 ## Testing and running the solution
 
