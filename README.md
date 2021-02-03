@@ -156,13 +156,15 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 4. Click on **IMPORT**. You might receive an error that information is missing.
 
-5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys.
+5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys. 
 
-6. In the workflow editor window, click on the **Close SecureX incident and add SNOW ID** action and scroll to the **REQUEST BODY** section and replace `xxx` with you ServiceNow tenant, this makes sure the link works when you update the SecureX incident. This reference URL will allow you to go directly to the ServiceNow incident!
+6. Make sure this workflow has the **CATEGORY** of `response` in the workflow properties pane on the right. This should be configured already.
+
+7. In the workflow editor window, click on the **Close SecureX incident and add SNOW ID** action and scroll to the **REQUEST BODY** section and replace `xxx` with you ServiceNow tenant, this makes sure the link works when you update the SecureX incident. This reference URL will allow you to go directly to the ServiceNow incident!
 
 ![](screenshots/change_tenant.png)
 
-7. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html) and a [Advanced Business Rule in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/script/business-rules/concept/c_BusinessRules.html). This can be done using the extra **incident work note** that have been added by the second workflow. The second ServiceNow incident worknote will contain a relative URL that needs to be send as outbound REST request to SecureX using a REST POST method. The needed relative URL path for this is put in this second ServiceNow worknote. You will need to create an [OAuth profile](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OAuth2ProfileTutorialGoogle.html) using the SecureX API credentials that you have created earlier. The JSON object as shown below is embeddedin the URL and will be able to be used when the ServiceNow incident is closed.
+8. You will also need to set an [outbound REST web service in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OutboundRESTWebService.html) and a [Advanced Business Rule in ServiceNow](https://docs.servicenow.com/bundle/paris-application-development/page/script/business-rules/concept/c_BusinessRules.html). This can be done using the extra **incident work note** that have been added by the second workflow. The second ServiceNow incident worknote will contain a relative URL that needs to be send as outbound REST request to SecureX using a REST POST method. The needed relative URL path for this is put in this second ServiceNow worknote. You will need to create an [OAuth profile](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/outbound-rest/concept/c_OAuth2ProfileTutorialGoogle.html) using the SecureX API credentials that you have created earlier. The JSON object as shown below is embeddedin the URL and will be able to be used when the ServiceNow incident is closed.
 
 ```
 {
@@ -177,7 +179,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 }
 ```
 
-8. Set up the **outbound REST web service** with the following specs:
+9. Set up the **outbound REST web service** with the following specs:
 
 * Name: **SecureX**
 * Endpoint: https://visibility.amp.cisco.com/iroh/iroh-response/${url_to_send}
@@ -213,7 +215,7 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 * Click on **Preview Script Usage** and copy paste the content. You will need this for the ServiceNow business rule that we are creating next!
 
     
-9. Now set up a new **Advanced Business Rule**:
+10. Now set up a new **Advanced Business Rule**:
 
 * Name: **SecureX close incident rule**
 * Table: Incident [incident]
