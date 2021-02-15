@@ -9,6 +9,20 @@
       {
         "schema_id": "datatype.string",
         "properties": {
+          "value": "SERVICENOW-TO-AMP",
+          "scope": "local",
+          "name": "Action to Find",
+          "type": "datatype.string",
+          "description": "If you're looking for a specific action, enter its name here. For orchestration workflows, this would be the workflow's exact name. If a matching action is found, the workflow will return its information",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01LFV77VFM0Y7065RT241OGoSsDGi4xH1Dn",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
           "value": "ip",
           "scope": "local",
           "name": "Observable Type",
@@ -32,20 +46,6 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01LFV77VFLZ6L722AvI8UDDhFcXE6SJcUmj",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "SERVICENOW-TO-AMP",
-          "scope": "local",
-          "name": "Action to Find",
-          "type": "datatype.string",
-          "description": "If you're looking for a specific action, enter its name here. For orchestration workflows, this would be the workflow's exact name. If a matching action is found, the workflow will return its information",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01LFV77VFM0Y7065RT241OGoSsDGi4xH1Dn",
         "object_type": "variable_workflow"
       }
     ],
@@ -95,7 +95,7 @@
               "skip_execution": false,
               "target": {
                 "override_workflow_target": true,
-                "target_id": "definition_target_01G9UGDY3W2665u1DW0TbC05Oq9PgsEzcKm",
+                "target_id": "definition_target_01LYH2TNGIVL145yjq4b5IyRe7nsMVf273d",
                 "target_type": "web-service.endpoint"
               },
               "workflow_id": "definition_workflow_01KWJ2ISZTF2V6ibRYe7FZ7sOuycDOpnwss"
@@ -358,24 +358,6 @@
     }
   },
   "targets": {
-    "definition_target_01G9UGDY3W2665u1DW0TbC05Oq9PgsEzcKm": {
-      "unique_name": "definition_target_01G9UGDY3W2665u1DW0TbC05Oq9PgsEzcKm",
-      "name": "CTR Target for access token",
-      "title": "CTR Target for access token",
-      "type": "web-service.endpoint",
-      "base_type": "target",
-      "object_type": "definition_target",
-      "properties": {
-        "default_runtime_user_id": "definition_runtime_user_01KSFM1N2KA5I54fg4N8XKPES9Z7k8zXXhL",
-        "description": "CTR_For_Access_Token",
-        "disable_certificate_validation": false,
-        "display_name": "CTR Target for access token",
-        "host": "visibility.amp.cisco.com",
-        "no_runtime_user": false,
-        "path": "/iroh",
-        "protocol": "https"
-      }
-    },
     "definition_target_01IHHL6CSE7M76lUSYu0kSHwLlVTw8u63Pw": {
       "unique_name": "definition_target_01IHHL6CSE7M76lUSYu0kSHwLlVTw8u63Pw",
       "name": "CTR IROH BASE URL",
@@ -392,13 +374,32 @@
         "path": "/iroh/",
         "protocol": "https"
       }
+    },
+    "definition_target_01LYH2TNGIVL145yjq4b5IyRe7nsMVf273d": {
+      "unique_name": "definition_target_01LYH2TNGIVL145yjq4b5IyRe7nsMVf273d",
+      "name": "CTR_For_Access_Token",
+      "title": "CTR Target for access token",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_01G9UGCFYZ7CN0OelN4pKwTDtjDeg7X9IHE",
+        "description": "CTR_For_Access_Token",
+        "disable_certificate_validation": false,
+        "display_name": "CTR_For_Access_Token",
+        "host": "visibility.amp.cisco.com",
+        "no_runtime_user": false,
+        "path": "/iroh",
+        "protocol": "https"
+      }
     }
   },
   "runtime_users": {
-    "definition_runtime_user_01KSFM1N2KA5I54fg4N8XKPES9Z7k8zXXhL": {
-      "unique_name": "definition_runtime_user_01KSFM1N2KA5I54fg4N8XKPES9Z7k8zXXhL",
-      "name": "CLEUR SEMSEC-2052",
-      "title": "CLEUR SEMSEC-2052",
+    "definition_runtime_user_01G9UGCFYZ7CN0OelN4pKwTDtjDeg7X9IHE": {
+      "unique_name": "definition_runtime_user_01G9UGCFYZ7CN0OelN4pKwTDtjDeg7X9IHE",
+      "name": "CTR_Credentials",
+      "title": "CTR_Credentials",
+      "description": "Account Key for CTR",
       "type": "runtime_user.web-service_basic_credentials",
       "base_type": "runtime_user",
       "object_type": "definition_runtime_user",
@@ -406,7 +407,7 @@
         "auth_option": "*****",
         "basic_password": "*****",
         "basic_username": "*****",
-        "display_name": "CLEUR SEMSEC-2052"
+        "display_name": "CTR_Credentials"
       }
     }
   },
@@ -425,7 +426,7 @@
     }
   },
   "atomic_workflows": [
-    "definition_workflow_01LN1L19T0TV005DmQQel75kxFub6INhKKO",
-    "definition_workflow_01KWJ2ISZTF2V6ibRYe7FZ7sOuycDOpnwss"
+    "definition_workflow_01KWJ2ISZTF2V6ibRYe7FZ7sOuycDOpnwss",
+    "definition_workflow_01LN1L19T0TV005DmQQel75kxFub6INhKKO"
   ]
 }
