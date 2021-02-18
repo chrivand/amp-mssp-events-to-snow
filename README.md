@@ -55,34 +55,6 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 * EU: https://securex-ao.eu.security.cisco.com/orch-ui/workflows/
 * APJC: https://securex-ao.apjc.security.cisco.com/orch-ui/workflows/
 
-2. Before we get started with importing the workflows, we will create a new variable type and a global variable. This will store our encoded API credentials. In the left hand menu, go to **Variables**:
-
-![](screenshots/mssp-amp-left-menu.png)
-
-3. Click on the **Variable Types** tab and then click on **NEW VARIABLE TYPE**:
-
-![](screenshots/mssp-amp-var-type.png)
-
-4. Now we are going to create a new table. Please fill in the details exactly as below and click **SUBMIT**:
-
-* Variable type **DISPLAY NAME** `AMP_MSSP_credentials`.
-* **Required** column 1: **FIELD NAME** `customer_name`, **FIELD TITLE** `Customer Name` and **FIELD TYPE** `String`.
-* **Required** column 1: **FIELD NAME** `encoded_api_credentials`, **FIELD TITLE** `Encoded API Credentials` and **FIELD TYPE** `String`.
-
-![](screenshots/mssp-amp-new-var-type.png)
-
-5. Now go to the **Global Variables** tab and then click on **NEW VARIABLE**:
-
-![](screenshots/mssp-amp-global-var.png)
-
-6. From the first drop down menu (**Data Type**) select the type that you have just created (`AMP_MSSP_credentials`). 
-
-* **DISPLAY NAME** `AMP_MSSP_credentials_table`.
-* **SCOPE** `Global`.
-* Fill in 1 dummy row to initiate the variable
-
-![](screenshots/mssp-amp-new-global.png)
-
 ## Import the first workflow to add encoded AMP API keys to table
 
 ### Required workflows, targets, accounts keys, global variables
@@ -132,9 +104,11 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 4. Click on **IMPORT**. You might receive an error that information is missing.
 
-5. Click on **UPDATE** and fill in the CTR (SecureX threat response) keys. These are not stored as plain text, as they are stored as "secure strings" in SecureX.
+5. Click on **UPDATE** and fill in the CTR (SecureX threat response) and ServiceNow information. These are not stored as plain text, as they are stored as "secure strings" in SecureX.
 
 > **Note:** To obtain the threat response API keys, create one here: https://securex.us.security.cisco.com/settings/apiClients. Please change the _.us._ in the url to _.eu._ or _.apjc._ respectively for the European or Asian instances. If you are using the EU or APJC instance, you will also need to change the target of the `CTRGenerateAccessToken` and `CTR Create Incident` activities in the workflow. You do this by clicking on the activity and scrolling to the `target` section. The SecureX Threat Response `client_id` is the target username, and the `client_secret` is the password. **Make sure to do this for all related CTR/Threat Response targets!** 
+
+> **Note:** In the **Service Now - Create Incident** activity you will need to make some updates. You will need to create **ServiceNow basic auth credentials** and fill those in as account keys for the ServiceNow target. Also, you will need to change the target to domain of your ServiceNow instance. Lastly, you need to set the `SERVICE NOW USER ID`. This is the `user_id` of the user that is creating the incidents in ServiceNow.
 
 6. It is important to consider which events are deemed important for your MSSP offering. A recommendation is to use all events which require human investigation from your SOC.  You can find all `event_types` in the [AMP API docs](https://api-docs.amp.cisco.com/api_actions/details?api_action=GET+%2Fv1%2Fevent_types&api_host=api.amp.cisco.com&api_resource=Event+Type&api_version=v1). You will need to change the **Get recent High Priority events from AMP** action by changing the event types in the **RELATIVE URL**. Below is an example of all event_types which you might want to include. This is set as default in the current workflow:
 
@@ -297,6 +271,8 @@ catch(ex) {
 ## Testing and running the solution
 
 1. Now it is time to test the **AMP-MSSP-TO-SERVICENOW** workflow: click on **RUN** in the top right of your window, and everything should be working now. If not try troubleshooting by click on the activity that is colored red. 
+
+> **Note:** If you are not getting any events, it might be that no high priority events happened in the last 5 minutes. If so, increase the amount of negative seconds in the **Calculate time 5 minutes ago** activity to something like 1 (86.400 seconds) or a couple of days. Also, so you can remove the `event_type` paramterer from the **Get recent High Priority events from AMP** actvity. 
 
 2. As a final step you could choose to enable to scheduled trigger for the [AMP-MSSP-TO-SERVICENOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SERVICENOW.json) workflow. This is recommended, as the workflow only retrieves the security events of the last 5 minutes. By scheduling it, the Security analysts will be updated every hour for potential new malicious activity. To enable the trigger, click on the hyperlink below and uncheck the `DISABLE TRIGGER` checkbox. This can be found in the workflow properties in the right menu pane. 
 
