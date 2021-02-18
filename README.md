@@ -73,6 +73,8 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 ![](screenshots/mssp-amp-user-prompt.png)
 
+> **Note:** Please note that the credentials are base 64 encoded, however are stored in the global table variable. SecureX is secured with MFA, but this still needs to be taken into consideration.
+
 ## Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents. 
 
 ### Required workflows, targets, accounts keys, global variables
