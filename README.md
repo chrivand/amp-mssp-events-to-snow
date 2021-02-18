@@ -265,7 +265,7 @@ catch(ex) {
 
 1. Now it is time to test the **AMP-MSSP-TO-SERVICENOW** workflow: click on **RUN** in the top right of your window, and everything should be working now. If not try troubleshooting by click on the activity that is colored red. 
 
-> **Note:** If you are not getting any events, it might be that no high priority events happened in the last 5 minutes. If so, increase the amount of negative seconds in the **Calculate time 5 minutes ago** activity to something like 1 (86.400 seconds) or a couple of days. Also, so you can remove the `event_type` paramterer from the **Get recent High Priority events from AMP** actvity. 
+> **Note:** If you are not getting any events, it might be that no high priority events happened in the last 5 minutes. If so, increase the amount of negative seconds in the **Calculate time 5 minutes ago** activity to something like 1 (86.400 seconds) or a couple of days. Also, so you can remove the `event_type` parameter from the relative URL from the **Get recent High Priority events from AMP** actvity. 
 
 2. As a final step you could choose to enable to scheduled trigger for the [AMP-MSSP-TO-SERVICENOW.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/AMP-MSSP-TO-SERVICENOW.json) workflow. This is recommended, as the workflow only retrieves the security events of the last 5 minutes. By scheduling it, the Security analysts will be updated every hour for potential new malicious activity. To enable the trigger, click on the hyperlink below and uncheck the `DISABLE TRIGGER` checkbox. This can be found in the workflow properties in the right menu pane. 
 
