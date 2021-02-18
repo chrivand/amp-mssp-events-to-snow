@@ -12,12 +12,11 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 1. [Features and flow](##features-and-flow)
 2. [Installation](#installation)
-    1. [Create table to store encoded MSSP API keys](#create-table-to-store-encoded-mssp-api-keys)
-    2. [Import the first workflow to add encoded AMP API keys to table](#import-the-first-workflow-to-add-encoded-amp-api-keys-to-table)
-    3. [Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents](#import-the-second-workflow-to-retrieve-amp-events-and-create-securex-and-servicenow-incidents)
-    4. [Import the third workflow that is triggered when ServiceNow incident is closed](#import-the-third-workflow-that-is-triggered-when-servicenow-incident-is-closed)
-    5. [Import the fourth workflow that sets a global variable containing the ID of the third workflow](#import-the-fourth-workflow-that-sets-a-global-variable-containing-the-id-of-the-third-workflow)
-    6. [Testing and running the solution](#testing-and-running-the-solution)
+    1. [Import the first workflow to add encoded AMP API keys to table](#import-the-first-workflow-to-add-encoded-amp-api-keys-to-table)
+    2. [Import the second workflow to retrieve AMP events and create SecureX and ServiceNow incidents](#import-the-second-workflow-to-retrieve-amp-events-and-create-securex-and-servicenow-incidents)
+    3. [Import the third workflow that is triggered when ServiceNow incident is closed](#import-the-third-workflow-that-is-triggered-when-servicenow-incident-is-closed)
+    4. [Import the fourth workflow that sets a global variable containing the ID of the third workflow](#import-the-fourth-workflow-that-sets-a-global-variable-containing-the-id-of-the-third-workflow)
+    5. [Testing and running the solution](#testing-and-running-the-solution)
 3. [Notes](#notes)
 4. [Author(s)](#authors)
 
