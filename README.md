@@ -41,20 +41,6 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 # Installation (plan around 30-45 minutes for this, incl. coffee break)
 
-## Create table to store encoded MSSP API keys
-
-### Required workflows, targets, accounts keys, global variables
-
-* None
-
-### Installation steps:
-
-1. Browse to your SecureX orchestration instance. This wille be a different URL depending on the region your account is in: 
-
-* US: https://securex-ao.us.security.cisco.com/orch-ui/workflows/
-* EU: https://securex-ao.eu.security.cisco.com/orch-ui/workflows/
-* APJC: https://securex-ao.apjc.security.cisco.com/orch-ui/workflows/
-
 ## Import the first workflow to add encoded AMP API keys to table
 
 ### Required workflows, targets, accounts keys, global variables
@@ -64,21 +50,27 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 
 ### Installation steps:
 
-1. Browse to the **Workflows** section in the left pane menu.
+1. Browse to your SecureX orchestration instance. This wille be a different URL depending on the region your account is in: 
 
-2. Click on **IMPORT** to import the workflow:
+* US: https://securex-ao.us.security.cisco.com/orch-ui/workflows/
+* EU: https://securex-ao.eu.security.cisco.com/orch-ui/workflows/
+* APJC: https://securex-ao.apjc.security.cisco.com/orch-ui/workflows/
+
+2. Browse to the **Workflows** section in the left pane menu.
+
+3. Click on **IMPORT** to import the workflow:
 
 ![](screenshots/import-workflow.png)
 
-3. Click on **Browse** and copy paste the content of the [ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json) file inside of the text window. 
+4. Click on **Browse** and copy paste the content of the [ADD-AMP-MSSP-CREDS.json](https://raw.githubusercontent.com/chrivand/amp-mssp-events-to-snow/main/ADD-AMP-MSSP-CREDS.json) file inside of the text window. 
 
 ![](screenshots/copy-paste.png)
 
-4. Click on **IMPORT**. You can now select the workflow and inspect it. Click **RUN** in the rop right corner: 
+5. Click on **IMPORT**. You can now select the workflow and inspect it. Click **RUN** in the rop right corner: 
 
 ![](screenshots/mssp-amp-run-add.png)
 
-5. You will now be prompted to enter the `CUSTOMER NAME`, `AMP API CLIENT ID` and `AMP API CLIENT SECRET`. Run this workflow as many times as needed (as many times as you have customers or when you add a new customer).
+6. You will now be prompted to enter the `CUSTOMER NAME`, `AMP API CLIENT ID` and `AMP API CLIENT SECRET`. Run this workflow as many times as needed (as many times as you have customers or when you add a new customer).
 
 ![](screenshots/mssp-amp-user-prompt.png)
 
