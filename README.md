@@ -150,6 +150,8 @@ This is a set of sample workflows to work with the MSSP environment of Cisco Sec
 }
 ```
 
+> **Note:** The needed relative URL path for this is now put in this second ServiceNow worknote. It is recommended to make this a hidden field, so that no one accidentally touches it. It works fine as is, but you might want to change this in production. That is up to the policies of your organization. 
+
 9. Set up the **outbound REST web service** with the following specs:
 
 * Name: **SecureX**
