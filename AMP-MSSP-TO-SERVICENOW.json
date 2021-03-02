@@ -132,10 +132,10 @@
                   "value": "Basic $activity.definition_activity_01L0NCHFESJST3h0E1RfiLcPkcx3v3CFXB7.input.source_array[@].encoded_api_credentials$"
                 }
               ],
-              "description": "Make changes to the relative URL if other event_types are needed. Do so by scrolling down in this properties section. Below is the current selection that has been made. Be careful, this is not an official best practices list! \n\n&event_type=1090519054&event_type=2164260880&event_type=2164260893&event_type=1090524040&event_type=1090524041&event_type=1090519084&event_type=1107296257&event_type=1107296258&event_type=1107296261&event_type=1107296262&event_type=1107296263&event_type=1107296264&event_type=1107296266&event_type=1107296267&event_type=1107296268&event_type=1107296269&event_type=1107296270&event_type=1107296271&event_type=1107296272&event_type=1107296273&event_type=1107296274&event_type=1107296275&event_type=1107296276&event_type=1091567670&event_type=1107296277&event_type=1107296278&event_type=1107296280&event_type=1107296281&event_type=1107296282&event_type=1107296284&event_type=1107296283&event_type=2164260931&event_type=1090519081&event_type=1090519105&event_type=1090519102&event_type=553648215",
+              "description": "Make changes to the relative URL if other event_types are needed. Do so by scrolling down in this properties section. Below is the current selection that has been made. Be careful, this is not an official best practices list! ",
               "display_name": "Get recent High Priority events from AMP",
               "method": "GET",
-              "relative_url": "events?start_date=$activity.definition_activity_01KY6GPWZ8FQA2Ih2Q40E0RPBZ7j4LkCgod.output.result$&event_type=1090519054&event_type=2164260880&event_type=2164260893&event_type=1090524040&event_type=1090524041&event_type=1090519084&event_type=1107296257&event_type=1107296258&event_type=1107296261&event_type=1107296262&event_type=1107296263&event_type=1107296264&event_type=1107296266&event_type=1107296267&event_type=1107296268&event_type=1107296269&event_type=1107296270&event_type=1107296271&event_type=1107296272&event_type=1107296273&event_type=1107296274&event_type=1107296275&event_type=1107296276&event_type=1091567670&event_type=1107296277&event_type=1107296278&event_type=1107296280&event_type=1107296281&event_type=1107296282&event_type=1107296284&event_type=1107296283&event_type=2164260931&event_type=1090519081&event_type=1090519105&event_type=1090519102&event_type=553648215",
+              "relative_url": "events?start_date=$activity.definition_activity_01KY6GPWZ8FQA2Ih2Q40E0RPBZ7j4LkCgod.output.result$&event_type[]=1090519054&event_type[]=2164260880&event_type[]=2164260893&event_type[]=1090524040&event_type[]=1090524041&event_type[]=1090519084&event_type[]=1107296257&event_type[]=1107296258&event_type[]=1107296261&event_type[]=1107296262&event_type[]=1107296263&event_type[]=1107296264&event_type[]=1107296266&event_type[]=1107296267&event_type[]=1107296268&event_type[]=1107296269&event_type[]=1107296270&event_type[]=1107296271&event_type[]=1107296272&event_type[]=1107296273&event_type[]=1107296274&event_type[]=1107296275&event_type[]=1107296276&event_type[]=1091567670&event_type[]=1107296277&event_type[]=1107296278&event_type[]=1107296280&event_type[]=1107296281&event_type[]=1107296282&event_type[]=1107296284&event_type[]=1107296283&event_type[]=2164260931&event_type[]=1090519081&event_type[]=1090519105&event_type[]=1090519102&event_type[]=553648215",
               "runtime_user": {
                 "target_default": true
               },
@@ -964,6 +964,12 @@
               "customer_name": "Customer PIW",
               "encoded_api_credentials": "Y2xpZW50LTEyNzhleTE5bmpzZGNqa2hhc2RjOjEybzczcjc4MTIzNzhyNzgxMzdvMTIzNzg0NzgyMTM0"
             }
+          },
+          {
+            "column_data": {
+              "customer_name": "Customer - XYZ",
+              "encoded_api_credentials": "Y2xpZW50LTIxMzk4ZTEyaXVlYmprc2RjOGFzZGN2Ojc2ODIzZTc4c2Fkdi1hc2R2LTMzMXJ2MTN2LWFkdmFkc2Z2"
+            }
           }
         ],
         "scope": "global",
@@ -1012,11 +1018,11 @@
     }
   },
   "atomic_workflows": [
-    "definition_workflow_01C0BYD0GI1KZ0mxScCSxVrfX70zrUdqLlW",
     "definition_workflow_01FLAR2IT5COJ1HFKMKazQkBlsJ72n028x9",
-    "definition_workflow_01FLAVEFJ8QLQ7UEi6gFNp1yotu1K18VEZS",
     "definition_workflow_01KWJ2ISZTF2V6ibRYe7FZ7sOuycDOpnwss",
-    "definition_workflow_01FMQTAT3H5VC4NVbonulAhVztfqidbUGlJ",
-    "definition_workflow_01KVVWMB2UTRF5uVHVH9DtiT6vgIfnzTdRS"
+    "definition_workflow_01FLAVEFJ8QLQ7UEi6gFNp1yotu1K18VEZS",
+    "definition_workflow_01KVVWMB2UTRF5uVHVH9DtiT6vgIfnzTdRS",
+    "definition_workflow_01C0BYD0GI1KZ0mxScCSxVrfX70zrUdqLlW",
+    "definition_workflow_01FMQTAT3H5VC4NVbonulAhVztfqidbUGlJ"
   ]
 }
